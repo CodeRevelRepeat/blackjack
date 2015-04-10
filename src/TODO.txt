@@ -1,0 +1,17 @@
+TODO:
+
+Make PlayerHand class that extends Hand
+Make DealerHand class that extends Hand
+
+Make PlayerHand.hit call PlayerHand.stand when score >=21
+
+Make PlayerHand.stand call Dealer.AI and DealerHand.reveal (or whatever)
+
+Make ResultsView that watches DeckModel for win conditions and displays results
+Make button appear with results to play another hand.
+Make button reshuffle the deck when cards are less than INSERT_NUMBER_HERE
+
+
+
+
+Maybe refactor out PlayerHand and DealerHand from Deck to AppModel
