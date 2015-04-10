@@ -3,12 +3,15 @@ class window.ResultsView extends Backbone.View
 
   template: _.template '<%= winner %> Wins!'
 
-  initialize: (@deck) ->
+  initialize: ->
+
     @collection.on('stand', (isDealer) ->
-      if isDealer then @render()
-    )
+      if isDealer
+        console.log(@)
+        @render()
+    , @)
 
   render: ->
-    winner=@model.GetWinner()
+    winner=@collection.GetWinner()
     @$el.html @template winner:winner
     @$el.addClass 'winner'+winner

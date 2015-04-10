@@ -3,17 +3,20 @@ class window.Deck extends Backbone.Collection
 
   initialize: ->
     @on('stand', (isDealer) ->
-      #if its the player then
-        #remove buttons
-        #dealer.ai()
-      console.log(isDealer)
+      if not isDealer
+        @dealer.AI()
     )
     @add _([0...52]).shuffle().map (card) ->
       new Card
         rank: card % 13
         suit: Math.floor(card / 13)
 
-  dealPlayer: -> new Hand [@pop(), @pop()], @, false
+  dealPlayer: -> @player = new Hand [@pop(), @pop()], @, false
 
-  dealDealer: -> new Hand [@pop().flip(), @pop()], @, true
+  dealDealer: -> @dealer = new Hand [@pop().flip(), @pop()], @, true
 
+  GetWinner: ->
+    if @player.minScore > @dealer.minScore
+      'player'
+    else
+      'dealer'

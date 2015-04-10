@@ -17,6 +17,22 @@ class window.Hand extends Backbone.Collection
     score + if card.get 'revealed' then card.get 'value' else 0
   , 0
 
+  AI: ->
+    #reveal the first card if necessary
+    if not @at(0).get('revealed')
+      @at(0).set('revealed', true)
+      setTimeout(@AI.bind(@), 1500)
+    #if score is less than SOMETHING
+    else if @minScore() < 12
+      #hit
+      @hit()
+      #setTimeout for AI
+      setTimeout(@AI.bind(@), 1500)
+    #else
+    else
+      #stand
+      @stand()
+
   scores: ->
     # The scores are an array of potential scores.
     # Usually, that array contains one element. That is the only score.
