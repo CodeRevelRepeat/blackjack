@@ -17,6 +17,10 @@ class window.AppView extends Backbone.View
     )
     @render()
 
+    # @model.get('deck').on('newGame', ->
+    #  @render()
+    # )
+
   render: ->
     @$el.children().detach()
     @$el.html @template()

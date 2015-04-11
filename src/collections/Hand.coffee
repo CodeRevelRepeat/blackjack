@@ -12,9 +12,16 @@ class window.Hand extends Backbone.Collection
       if(@bestScore()>=21)
         @stand()
       card
-
   stand: ->
     @deck.trigger( 'stand', @isDealer )
+
+  deal: ->
+    @reset()
+    @push(@deck.pop())
+    @push(@deck.pop())
+    if(@isDealer)
+      @at(0).flip()
+
 
   hasBlackJack: ->
     @length == 2 and @bestScore()==21

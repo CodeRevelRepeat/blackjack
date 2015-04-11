@@ -17,5 +17,5 @@ class window.ResultsView extends Backbone.View
 
   events:
     'click .refresh': ->
-      @collection.player.deal()
-      @collection.dealDealer()
+      @collection.trigger('newGame')  #trigger to app
+
