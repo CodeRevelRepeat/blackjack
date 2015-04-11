@@ -16,11 +16,11 @@ class window.Deck extends Backbone.Collection
   dealDealer: -> @dealer = new Hand [@pop().flip(), @pop()], @, true
 
   GetWinner: ->
-    console.log("playermin", @player.minScore());
-    console.log('dealermin', @dealer.minScore());
-    if (not @dealer.hasBlackJack()) and (@player.hasBlackJack() or @dealer.minScore()>21 or (@player.minScore() > @dealer.minScore() and @player.minScore() <= 21))
+    if @player.beats(@dealer)
       'Player'
-    else if (not @player.hasBlackJack()) and (@dealer.hasBlackJack() or @player.minScore()>21 or (@dealer.minScore() > @player.minScore() and @dealer.minScore() <= 21))
+    else if @dealer.beats(@player)
       'Dealer'
     else
       'Nobody'
+
+

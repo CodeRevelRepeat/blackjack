@@ -13,3 +13,11 @@ describe 'deck', ->
       assert.strictEqual deck.length, 50
       assert.strictEqual deck.last(), hand.hit()
       assert.strictEqual deck.length, 49
+
+
+  describe 'has blackjack', ->
+    it 'should return true if hand has blackjack', ->
+      hand.at(0).value = 10
+      hand.at(1).value = 11
+      assert.strictEqual hand.hasBlackJack(), true
+

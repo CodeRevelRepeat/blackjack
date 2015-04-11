@@ -4,13 +4,15 @@ class window.Hand extends Backbone.Collection
   initialize: (array, @deck, @isDealer) ->
 
   hit: ->
-    @add(@deck.pop())
+    card = @deck.pop()
+    @add(card)
+    card
 
   stand: ->
     @deck.trigger( 'stand', @isDealer )
 
   hasBlackJack: ->
-    @length == 2 and @minScore()==21
+    @length == 2 and @bestScore()==21
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
@@ -26,9 +28,9 @@ class window.Hand extends Backbone.Collection
       @at(0).set('revealed', true)
       setTimeout(@AI.bind(@), 1500)
     #if score is less than SOMETHING
-    else if @deck.player.minScore()>21
+    else if @deck.player.bestScore()>21
       @stand()
-    else if @minScore() < @deck.player.minScore()
+    else if @bestScore() < @deck.player.bestScore()
       #hit
       @hit()
       #setTimeout for AI
@@ -37,11 +39,34 @@ class window.Hand extends Backbone.Collection
     else
       #stand
       @stand()
-
+  bestScore: ->
+    if @scores()[1]<=21
+      @scores()[1]
+    else
+      @scores()[0]
   scores: ->
     # The scores are an array of potential scores.
     # Usually, that array contains one element. That is the only score.
     # when there is an ace, it offers you two scores - the original score, and score + 10.
     [@minScore(), @minScore() + 10 * @hasAce()]
+
+   beats: (other) ->
+      if other.hasBlackJack()
+        console.log('Other guy has a black jack')
+        false
+      else if @hasBlackJack()
+        console.log('I have a black jack!')
+        true
+      else if other.bestScore()>21
+        console.log('Lol I win')
+        true
+      else if @bestScore()>21
+        console.log('BUSTED!')
+        false
+      else if @bestScore() > other.bestScore()
+        console.log('I win. Fair and square')
+        true
+      else
+        console.log('uh... what?')
 
 

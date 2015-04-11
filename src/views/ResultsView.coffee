@@ -7,7 +7,6 @@ class window.ResultsView extends Backbone.View
 
     @collection.on('stand', (isDealer) ->
       if isDealer
-        console.log(@)
         @render()
     , @)
 
