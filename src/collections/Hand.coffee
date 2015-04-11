@@ -9,6 +9,9 @@ class window.Hand extends Backbone.Collection
   stand: ->
     @deck.trigger( 'stand', @isDealer )
 
+  hasBlackJack: ->
+    @length == 2 and @minScore()==21
+
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
   , 0
@@ -23,7 +26,9 @@ class window.Hand extends Backbone.Collection
       @at(0).set('revealed', true)
       setTimeout(@AI.bind(@), 1500)
     #if score is less than SOMETHING
-    else if @minScore() < 12
+    else if @deck.player.minScore()>21
+      @stand()
+    else if @minScore() < @deck.player.minScore()
       #hit
       @hit()
       #setTimeout for AI
