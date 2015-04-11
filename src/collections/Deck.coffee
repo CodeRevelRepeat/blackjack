@@ -6,10 +6,7 @@ class window.Deck extends Backbone.Collection
       if not isDealer
         @dealer.AI()
     )
-    @add _([0...52]).shuffle().map (card) ->
-      new Card
-        rank: card % 13
-        suit: Math.floor(card / 13)
+    @reshuffle()
 
   dealPlayer: ->
     if(not @player)
@@ -32,4 +29,14 @@ class window.Deck extends Backbone.Collection
     else
       'Nobody'
 
+  reshuffle: ->
+    @reset()
+    @add _([0...52]).shuffle().map (card) ->
+      new Card
+        rank: card % 13
+        suit: Math.floor(card / 13)
+
+  reshuffleIfNecessary: ->
+    if @length < 15
+      @reshuffle()
 

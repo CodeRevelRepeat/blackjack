@@ -8,6 +8,7 @@ class window.App extends Backbone.Model
 
 #listener and reset hands
     @get('deck').on('newGame', =>
+      @get('deck').reshuffleIfNecessary()
       @get('playerHand').deal()
       @get('dealerHand').deal()
     )
