@@ -1,7 +1,7 @@
 class window.ResultsView extends Backbone.View
   className: 'results-container'
 
-  template: _.template '<%= winner %> Wins!'
+  template: _.template '<%= winner %> Wins! </br> <button class="refresh">New Game</button>'
 
   initialize: ->
 
@@ -14,3 +14,8 @@ class window.ResultsView extends Backbone.View
     winner=@collection.GetWinner()
     @$el.html @template winner:winner
     @$el.addClass 'winner'+winner
+
+  events:
+    'click .refresh': ->
+      @collection.player.deal()
+      @collection.dealDealer()
